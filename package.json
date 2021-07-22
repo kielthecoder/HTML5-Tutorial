@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/kielthecoder/HTML5-Tutorial#readme",
   "dependencies": {
-    "@crestron/ch5-crcomlib": "^1.1.0",
-    "@crestron/ch5-webxpanel": "^1.0.3"
+    "@crestron/ch5-crcomlib": "^1.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.46.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }
