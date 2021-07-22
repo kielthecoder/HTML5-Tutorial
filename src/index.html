@@ -9,8 +9,14 @@
     <script src="app.js"></script>
 </head>
 <body>
-    <div class="content">
-        <h1>My HTML5 Template</h1>
+    <div id="Room.Room">
+        <ch5-button sendEventOnClick="Room.Power_On" receiveStateSelected="Room.Power_On_Fb">
+        </ch5-button>
+        <ch5-button sendEventOnClick="Room.Power_Off" receiveStateSelected="Room.Power_Off_Fb">
+        </ch5-button>
+        <ch5-slider sendEventOnChange="Room.Mode" receiveStateValue="Room.Mode_Fb">
+        </ch5-slider>
+        <span data-ch5-textcontent="Room.Name_Fb">Label</span>
     </div>
 </body>
 </html>

@@ -1,5 +1,8 @@
 contracts/output/
 
+# HTML5
+node_modules/
+
 # SIMPL Windows
 SPlsWork/
 *.ASV
