@@ -7,6 +7,7 @@
 
 body {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -19,13 +20,28 @@ body {
 h1 {
     font-family: 'Muli', sans-serif;
     font-size: 4rem;
+    margin: 1rem;
+    text-align: center;
 }
 
-h2 {
-    font-family: 'Muli', sans-serif;
-    font-style: italic;
+.btn-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.ch5-button .cb-btn {
+    background: linear-gradient(#4488ff, #2244ee);
+    border: solid 2px #002288;
+    color: #fafafa;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin: 0.5rem;
     font-size: 2rem;
-    font-weight: normal;
-    text-align: center;
-    color: rebeccapurple;
+}
+
+.ch5-button--selected .cb-btn {
+    background: linear-gradient(180deg, #cc6600, #ff8800);
+    border: solid 2px #111111;
+    color: #111111;
+    outline: none;
 }

@@ -6,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
 </head>
 <body>
-    <div id="Room.Room">
-        <ch5-button sendEventOnClick="Room.Power_On" receiveStateSelected="Room.Power_On_Fb">
-        </ch5-button>
-        <ch5-button sendEventOnClick="Room.Power_Off" receiveStateSelected="Room.Power_Off_Fb">
-        </ch5-button>
-        <ch5-slider sendEventOnChange="Room.Mode" receiveStateValue="Room.Mode_Fb">
-        </ch5-slider>
-        <span data-ch5-textcontent="Room.Name_Fb">Label</span>
+    <div class="content">
+        <h1 data-ch5-textcontent="Room.Name_Fb">Room Name</h1>
+        <div class="btn-group">
+            <ch5-button label="Power On" sendEventOnClick="Room.Power_On" receiveStateSelected="Room.Power_On_Fb">
+            </ch5-button>
+            <ch5-button label="Power Off" sendEventOnClick="Room.Power_Off" receiveStateSelected="Room.Power_Off_Fb">
+            </ch5-button>
+        </div>
     </div>
+    <script src="bundle.js"></script>
 </body>
 </html>
