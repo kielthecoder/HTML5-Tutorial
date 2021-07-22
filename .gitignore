@@ -1,1 +1,12 @@
 contracts/output/
+
+# SIMPL Windows
+SPlsWork/
+*.ASV
+*.chd?
+*.lpz
+*.hash
+*.sig
+*.sm2
+*.smft
+*.zip
