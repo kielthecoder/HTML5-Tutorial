@@ -15,3 +15,9 @@ SPlsWork/
 *.sm2
 *.smft
 *.zip
+
+# SIMPL# Pro
+.vs/
+bin/
+obj/
+packages/
