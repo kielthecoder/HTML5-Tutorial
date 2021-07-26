@@ -24,9 +24,6 @@
     "@crestron/ch5-webxpanel": "^1.0.3"
   },
   "devDependencies": {
-    "fs": "0.0.1-security",
-    "glob": "^7.1.4",
-    "path": "^0.12.7",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.4"
   }
