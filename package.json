@@ -5,9 +5,12 @@
   "main": "app.js",
   "scripts": {
     "build": "webpack",
+    "copy:html": "copyfiles -f ./src/*.html ./dist",
+    "copy:css": "copyfiles -f ./src/*.css ./dist",
+    "copy:img": "copyfiles -f ./src/assets/img/* ./dist/assets/img",
+    "copy:everything": "npm run copy:html && npm run copy:css && npm run copy:img",
     "archive": "ch5-cli archive -p project -d dist -o archive -c ./contracts/output/General/interface/mapping/General.cse2j",
-    "onestep": "npm run build && npm run archive",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "onestep": "npm run build && npm run copy:everything && npm run archive"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
     "@crestron/ch5-webxpanel": "^1.0.3"
   },
   "devDependencies": {
+    "copyfiles": "^2.4.1",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.4"
   }
