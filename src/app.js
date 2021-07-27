@@ -16,4 +16,9 @@ else {
 }
 
 const CrComLib = require('../node_modules/@crestron/ch5-crcomlib/build_bundles/cjs/cr-com-lib.js');
+
 window.CrComLib = CrComLib;
+window.bridgeReceiveIntegerFromNative = CrComLib.bridgeReceiveIntegerFromNative;
+window.bridgeReceiveBooleanFromNative = CrComLib.bridgeReceiveBooleanFromNative;
+window.bridgeReceiveStringFromNative = CrComLib.bridgeReceiveStringFromNative;
+window.bridgeReceiveObjectFromNative = CrComLib.bridgeReceiveObjectFromNative;
