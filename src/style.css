@@ -160,6 +160,12 @@ body {
     margin-top: 8rem;
 }
 
+.card .text h3 {
+    width: 60%;
+    margin-top: 5rem;
+    text-align: center;
+}
+
 .card .welcome-text {
     display: flex;
     flex-direction: column;
@@ -168,4 +174,36 @@ body {
 
 .card .welcome-text h2 {
     margin-top: 0 !important;
+}
+
+.card button {
+    background-color: #dadada;
+    border: solid 1px #bababa;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    width: 12rem;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.card button + button {
+    margin-left: 1rem;
+}
+
+.card button.accept {
+    background-color: #1133ba;
+    border: solid 1px #0000aa;
+    color: #fafafa;
+}
+
+.card button.danger {
+    background-color: #ba1111;
+    border: solid 1px #aa0000;
+    color: #fafafa;
+}
+
+.card button.normal {
+    background-color: #444444;
+    border: solid 1px #333333;
+    color: #fafafa;
 }
