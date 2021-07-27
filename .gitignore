@@ -16,6 +16,9 @@ SPlsWork/
 *.smft
 *.zip
 
+# VT Pro-e
+*.vtz
+
 # SIMPL# Pro
 .vs/
 bin/
