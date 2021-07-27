@@ -8,15 +8,92 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="content">
-        <h1 data-ch5-textcontent="Room.Name_Fb">Room Name</h1>
-        <div class="btn-group">
-            <ch5-button label="Power On" sendEventOnClick="Room.Power_On" receiveStateSelected="Room.Power_On_Fb">
-            </ch5-button>
-            <ch5-button label="Power Off" sendEventOnClick="Room.Power_Off" receiveStateSelected="Room.Power_Off_Fb">
-            </ch5-button>
+    <section id="top">
+        <div id="room-name">Room Name</div>
+        <div id="time">12:00 PM</div>
+        <div id="date">Tuesday, July 27, 2021</div>
+    </section>
+
+    <section id="view">
+        <div class="card active" id="welcome">
+            <div></div>
+            <div class="text welcome-text">
+                <h1>Welcome</h1>
+                <h2>Choose a source from the menu below to get started.</h2>
+            </div>
         </div>
-    </div>
+
+        <div class="card" id="laptop">
+            <div class="icon">
+                <img src="./assets/img/Laptop.png" />
+            </div>
+            <div class="text">
+                <h1>Laptop</h1>
+                <h2>Make sure your laptop is connected to the HDMI cable at the table.</h2>
+            </div>
+        </div>
+
+        <div class="card  " id="appletv">
+            <div class="icon">
+                <img src="./assets/img/AppleTV.png" />
+            </div>
+            <div class="text">
+                <h1>Apple TV</h1>
+            </div>
+        </div>
+
+        <div class="popup ">
+            <div class="card " id="settings">
+                <div class="icon">
+                    <img src="./assets/img/Gear.png" />
+                </div>
+                <div class="text">
+                    <h1>Settings</h1>
+                    <h2>TODO</h2>
+                </div>
+            </div>
+            
+            <div class="card " id="shutdown">
+                <div class="icon">
+                    <img src="./assets/img/Power.png" />
+                </div>
+                <div class="text">
+                    <h1>Shutdown</h1>
+                    <h2>Are you sure you want to shutdown the system?</h2>
+                    <h3>
+                        <button class="danger">Shutdown</button>
+                        <button class="normal">Cancel</button>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="bottom">
+        <div class="system">
+            <button>
+                <img class="icon" src="./assets/img/Power_Dark.png" />
+                <span class="text">Shutdown</span>
+            </button>
+        </div>
+        <div class="sources">
+            <button>
+                <img class="icon" src="./assets/img/Laptop_Dark.png" />
+                <span class="text">Laptop</span>
+            </button>
+            <button>
+                <img class="icon" src="./assets/img/Apple_Dark.png" />
+                <span class="text">Apple TV</span>
+            </button>
+        </div>
+        <div class="settings">
+            <button>
+                <img class="icon" src="./assets/img/Gear_Dark.png" />
+                <span class="text">Settings</span>
+            </button>
+        </div>
+    </section>
     <script src="bundle.js"></script>
 </body>
 </html>
