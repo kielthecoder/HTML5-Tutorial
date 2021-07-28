@@ -27,3 +27,34 @@ CrComLib.subscribeState('s', '1', (value) => {
     const elem = document.getElementById('room-name');
     elem.innerHTML = value;
 });
+
+var activeCard = document.getElementById('card-welcome');
+
+function showCard (nextCard) {
+    if (activeCard.id != nextCard) {
+        const popup = document.getElementsByClassName('popup')[0];
+        activeCard.classList.remove('active');
+
+        if (nextCard.substring(0, 6) == 'popup-') {
+            popup.classList.add('active');
+        }
+        else {
+            popup.classList.remove('active');
+        }
+
+        activeCard = document.getElementById(nextCard);
+        activeCard.classList.add('active');
+    }
+}
+
+const btnLaptop = document.getElementById('btn-laptop');
+const btnAppleTV = document.getElementById('btn-appletv');
+
+btnLaptop.addEventListener('click', (e) => showCard('card-laptop'));
+btnAppleTV.addEventListener('click', (e) => showCard('card-appletv'));
+
+const btnSettings = document.getElementById('btn-settings');
+const btnShutdown = document.getElementById('btn-shutdown');
+
+btnSettings.addEventListener('click', (e) => showCard('popup-settings'));
+btnShutdown.addEventListener('click', (e) => showCard('popup-shutdown'));
