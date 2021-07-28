@@ -22,3 +22,8 @@ window.bridgeReceiveIntegerFromNative = CrComLib.bridgeReceiveIntegerFromNative;
 window.bridgeReceiveBooleanFromNative = CrComLib.bridgeReceiveBooleanFromNative;
 window.bridgeReceiveStringFromNative = CrComLib.bridgeReceiveStringFromNative;
 window.bridgeReceiveObjectFromNative = CrComLib.bridgeReceiveObjectFromNative;
+
+CrComLib.subscribeState('s', '1', (value) => {
+    const elem = document.getElementById('room-name');
+    elem.innerHTML = value;
+});

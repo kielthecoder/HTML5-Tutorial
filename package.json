@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "webpack",
-    "archive": "ch5-cli archive -p project -d dist -o archive -c ./contracts/output/General/interface/mapping/General.cse2j",
+    "archive": "ch5-cli archive -p project -d dist -o archive",
     "onestep": "npm run build && npm run archive"
   },
   "repository": {
