@@ -47,11 +47,36 @@ function showCard (nextCard) {
     }
 }
 
+function routeSource (n) {
+    CrComLib.publishEvent('n', '1', n);
+}
+
+CrComLib.subscribeState('n', '1', (value) => {
+    switch (value) {
+        case 0:
+            showCard('card-welcome');
+            break;
+        case 1:
+            showCard('card-laptop');
+            break;
+        case 2:
+            showCard('card-appletv');
+            break;
+    }
+});
+
 const btnLaptop = document.getElementById('btn-laptop');
 const btnAppleTV = document.getElementById('btn-appletv');
 
-btnLaptop.addEventListener('click', (e) => showCard('card-laptop'));
-btnAppleTV.addEventListener('click', (e) => showCard('card-appletv'));
+btnLaptop.addEventListener('click', (e) => {
+    showCard('card-laptop');
+    routeSource(1);
+});
+
+btnAppleTV.addEventListener('click', (e) => {
+    showCard('card-appletv');
+    routeSource(2);
+});
 
 const btnSettings = document.getElementById('btn-settings');
 const btnShutdown = document.getElementById('btn-shutdown');
