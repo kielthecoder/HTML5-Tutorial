@@ -29,6 +29,7 @@ CrComLib.subscribeState('s', '1', (value) => {
 });
 
 var activeCard = document.getElementById('card-welcome');
+var prevCard;
 
 function showCard (nextCard) {
     if (activeCard.id != nextCard) {
@@ -42,6 +43,7 @@ function showCard (nextCard) {
             popup.classList.remove('active');
         }
 
+        prevCard = activeCard;
         activeCard = document.getElementById(nextCard);
         activeCard.classList.add('active');
     }
@@ -83,3 +85,24 @@ const btnShutdown = document.getElementById('btn-shutdown');
 
 btnSettings.addEventListener('click', (e) => showCard('popup-settings'));
 btnShutdown.addEventListener('click', (e) => showCard('popup-shutdown'));
+
+function previousCard() {
+    if (prevCard !== undefined) {
+        showCard(prevCard.id);
+        prevCard = undefined;
+    }
+}
+
+const btnShutdownShutdown = document.getElementById('btn-shutdown-shutdown');
+btnShutdownShutdown.addEventListener('click', (e) => {
+    showCard('card-welcome');
+    routeSource(0);
+});
+
+const btnSettingsApply = document.getElementById('btn-settings-apply');
+btnSettingsApply.addEventListener('click', (e) => previousCard());
+
+const btnsCancel = Array.from(document.getElementsByClassName('cancel'))
+btnsCancel.forEach((btn) => {
+    btn.addEventListener('click', (e) => previousCard());
+});
