@@ -78,12 +78,21 @@ body {
 
 #bottom button {
     background-color: #dadada;
-    border: solid 1px #bababa;
+    border: solid 2px #bababa;
     border-radius: 1rem;
     margin: 1rem;
     width: 8rem;
     height: 8rem;
     position: relative;
+}
+
+#bottom button:focus {
+    outline: none;
+}
+
+#bottom button.active {
+    background-color: white;
+    border: solid 2px cornflowerblue;
 }
 
 #bottom button .icon {

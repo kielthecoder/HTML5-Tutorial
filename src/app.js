@@ -23,6 +23,8 @@ window.bridgeReceiveBooleanFromNative = CrComLib.bridgeReceiveBooleanFromNative;
 window.bridgeReceiveStringFromNative = CrComLib.bridgeReceiveStringFromNative;
 window.bridgeReceiveObjectFromNative = CrComLib.bridgeReceiveObjectFromNative;
 
+const moment = require('moment');
+
 CrComLib.subscribeState('s', '1', (value) => {
     const elem = document.getElementById('room-name');
     elem.innerHTML = value;
@@ -46,6 +48,17 @@ function showCard (nextCard) {
         prevCard = activeCard;
         activeCard = document.getElementById(nextCard);
         activeCard.classList.add('active');
+
+        const name = activeCard.id.substring(activeCard.id.indexOf('-') + 1);
+        const bottom = document.getElementById('bottom');
+        Array.from(bottom.getElementsByTagName('BUTTON')).forEach((btn) => {
+            if (btn.id == `btn-${name}`) {
+                btn.classList.add('active');
+            }
+            else {
+                btn.classList.remove('active');
+            }
+        });
     }
 }
 
@@ -106,3 +119,11 @@ const btnsCancel = Array.from(document.getElementsByClassName('cancel'))
 btnsCancel.forEach((btn) => {
     btn.addEventListener('click', (e) => previousCard());
 });
+
+const lblTime = document.getElementById('time');
+const lblDate = document.getElementById('date');
+
+setInterval(() => {
+    lblTime.innerText = moment().format('h:mm A');
+    lblDate.innerText = moment().format('dddd, MMMM Do, YYYY');
+}, 5000);
