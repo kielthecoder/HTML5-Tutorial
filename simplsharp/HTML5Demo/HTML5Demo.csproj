@@ -130,12 +130,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="contracts\ComponentMediator.g.cs" />
-    <Compile Include="contracts\Contract.g.cs" />
     <Compile Include="ControlSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="contracts\Room.g.cs" />
-    <Compile Include="contracts\UIEventArgs.g.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,14 +4,13 @@ using Crestron.SimplSharpPro;
 using Crestron.SimplSharpPro.CrestronThread;
 using Crestron.SimplSharpPro.DeviceSupport;
 using Crestron.SimplSharpPro.UI;
-using General;
 
 namespace HTML5Demo
 {
     public class ControlSystem : CrestronControlSystem
     {
-        private Contract _contract;
         private BasicTriListWithSmartObject _tp;
+        private ushort _src;
 
         public ControlSystem()
             : base()
@@ -30,15 +29,9 @@ namespace HTML5Demo
         {
             try
             {
-                _contract = new Contract();
-
-                _contract.Room.Power_On += Room_Power_On;
-                _contract.Room.Power_Off += Room_Power_Off;
-                
                 _tp = new Ts770(0x03, this);
                 _tp.OnlineStatusChange += tp_OnlineStatusChange;
-
-                _contract.AddDevice(_tp);
+                _tp.SigChange += tp_SigChange;
 
                 if (_tp.Register() != eDeviceRegistrationUnRegistrationResponse.Success)
                 {
@@ -51,29 +44,28 @@ namespace HTML5Demo
             }
         }
 
-        private void tp_OnlineStatusChange(GenericBase dev, OnlineOfflineEventArgs args)
+        private void tp_SigChange(BasicTriList dev, SigEventArgs args)
         {
-            _contract.Room.Name_Fb((StringInputSig sig, IRoom room) => sig.StringValue = "SIMPL# Pro Lab");
-            _contract.Room.Power_On_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = true);
-            _contract.Room.Power_On_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = false);
-            _contract.Room.Power_Off_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = true);
-        }
-
-        private void Room_Power_On(object sender, UIEventArgs e)
-        {
-            if (e.SigArgs.Sig.BoolValue)
+            switch (args.Sig.Type)
             {
-                _contract.Room.Power_Off_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = false);
-                _contract.Room.Power_On_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = true);
+                case eSigType.UShort:
+                    switch (args.Sig.Number)
+                    {
+                        case 1:
+                            _src = args.Sig.UShortValue;
+                            break;
+                    }
+                    break;
             }
         }
 
-        private void Room_Power_Off(object sender, UIEventArgs e)
+        private void tp_OnlineStatusChange(GenericBase dev, OnlineOfflineEventArgs args)
         {
-            if (e.SigArgs.Sig.BoolValue)
+            if (args.DeviceOnLine)
             {
-                _contract.Room.Power_On_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = false);
-                _contract.Room.Power_Off_Fb((BoolInputSig sig, IRoom room) => sig.BoolValue = true);
+                var tp = (BasicTriList)dev;
+                tp.StringInput[1].StringValue = "SIMPL# Pro Test";
+                tp.UShortInput[1].UShortValue = _src;
             }
         }
     }
