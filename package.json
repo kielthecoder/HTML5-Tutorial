@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack",
     "archive": "ch5-cli archive -p project -d dist -o archive",
-    "onestep": "npm run build && npm run archive"
+    "onestep": "npm run build && npm run archive",
+    "huddle:build": "webpack --env name=HuddleRoom --env prefix=HuddleRoom/html/",
+    "huddle:archive": "ch5-cli archive -p HuddleRoom -d HuddleRoom/dist -o archive"
   },
   "repository": {
     "type": "git",

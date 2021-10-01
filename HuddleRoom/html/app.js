@@ -1,4 +1,5 @@
-const webXpanel = require('../node_modules/@crestron/ch5-webxpanel/dist/cjs/index.js');
+// const webXpanel = require('../node_modules/@crestron/ch5-webxpanel/dist/cjs/index.js');
+const webXpanel = require('@crestron/ch5-webxpanel/dist/cjs/index.js');
 
 const configuration = {
     host: '192.168.1.13',
@@ -15,7 +16,8 @@ else {
     console.log('Skipping WebXPanel since running on touchpanel');
 }
 
-const CrComLib = require('../node_modules/@crestron/ch5-crcomlib/build_bundles/cjs/cr-com-lib.js');
+//const CrComLib = require('../node_modules/@crestron/ch5-crcomlib/build_bundles/cjs/cr-com-lib.js');
+const CrComLib = require('@crestron/ch5-crcomlib/build_bundles/cjs/cr-com-lib.js');
 
 window.CrComLib = CrComLib;
 window.bridgeReceiveIntegerFromNative = CrComLib.bridgeReceiveIntegerFromNative;
