@@ -3,30 +3,30 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = function (env) {
-    if (env.name === undefined) {
-        env.name = '';
+    if (env.target === undefined) {
+        env.target = '';
     }
 
-    if (env.prefix === undefined) {
-        env.prefix = 'src/';
+    if (env.source === undefined) {
+        env.source = 'src';
     }
 
     return {
         mode: 'development',
-        entry: './' + env.prefix + 'app.js',
+        entry: './' + env.source + '/app.js',
         output: {
             filename: 'bundle.js',
-            path: path.resolve(__dirname, env.name, 'dist')
+            path: path.resolve(__dirname, env.target, 'dist')
         },
         plugins: [
             new CopyPlugin({
                 patterns: [
                     {
-                        from: env.prefix + 'assets',
+                        from: env.source + '/assets',
                         to: 'assets/'
                     },
                     {
-                        from: env.prefix + '*.(html|css)',
+                        from: env.source + '/*.(html|css)',
                         to: '[name][ext]'
                     }
                 ]
