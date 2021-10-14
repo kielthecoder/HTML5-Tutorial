@@ -3,6 +3,7 @@ using Crestron.SimplSharp;
 using Crestron.SimplSharpPro;
 using Crestron.SimplSharpPro.CrestronThread;
 using Crestron.SimplSharpPro.DeviceSupport;
+using Crestron.SimplSharpPro.GeneralIO;
 using Crestron.SimplSharpPro.UI;
 
 namespace HuddleRoom
@@ -10,6 +11,7 @@ namespace HuddleRoom
     public class ControlSystem : CrestronControlSystem
     {
         private BasicTriListWithSmartObject _tp;
+        private CenOdtCPoe _occSensor;
         private ushort _src;
 
         public ControlSystem()
@@ -36,6 +38,14 @@ namespace HuddleRoom
                 if (_tp.Register() != eDeviceRegistrationUnRegistrationResponse.Success)
                 {
                     ErrorLog.Error("Unable to register TSW-1060: {0}", _tp.RegistrationFailureReason);
+                }
+
+                _occSensor = new CenOdtCPoe(0x04, this);
+                _occSensor.CenOccupancySensorChange += occSensor_CenOccupancySensorChange;
+
+                if (_occSensor.Register() != eDeviceRegistrationUnRegistrationResponse.Success)
+                {
+                    ErrorLog.Error("Unable to register CEN-ODT-C-POE: {0}", _occSensor.RegistrationFailureReason);
                 }
             }
             catch (Exception e)
@@ -67,6 +77,27 @@ namespace HuddleRoom
                         case 1:
                             _src = args.Sig.UShortValue;
                             break;
+                    }
+                    break;
+            }
+        }
+
+        private void occSensor_CenOccupancySensorChange(object sender, GenericEventArgs args)
+        {
+            var sensor = sender as CenOdtCPoe;
+
+            switch (args.EventId)
+            {
+                case GlsOccupancySensorBase.RoomOccupiedFeedbackEventId:
+                    if (sensor.OccupancyDetectedFeedback.BoolValue)
+                    {
+                        // TODO: turn system on
+                    }
+                    break;
+                case GlsOccupancySensorBase.RoomVacantFeedbackEventId:
+                    if (sensor.VacancyDetectedFeedback.BoolValue)
+                    {
+                        // TODO: turn system off
                     }
                     break;
             }
