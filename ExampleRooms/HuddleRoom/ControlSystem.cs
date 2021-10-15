@@ -22,9 +22,10 @@ namespace HuddleRoom
     public class ControlSystem : CrestronControlSystem
     {
         private BasicTriListWithSmartObject _tp;
-        private CenOdtCPoe _occSensor;
         private DmRmc4kz100C _rmc;
         private DmTx4kz202C _tx;
+
+        private Occupancy _occ;
         private ushort _src;
 
         public ControlSystem()
@@ -53,13 +54,9 @@ namespace HuddleRoom
                     ErrorLog.Error("Unable to register TSW-1060: {0}", _tp.RegistrationFailureReason);
                 }
 
-                _occSensor = new CenOdtCPoe(0x04, this);
-                _occSensor.CenOccupancySensorChange += occSensor_Change;
-
-                if (_occSensor.Register() != eDeviceRegistrationUnRegistrationResponse.Success)
-                {
-                    ErrorLog.Error("Unable to register CEN-ODT-C-POE: {0}", _occSensor.RegistrationFailureReason);
-                }
+                _occ = new Occupancy(0x04, this);
+                _occ.RoomOccupied += (sender, args) => SetSource((ushort)SourceIds.RoomPC);
+                _occ.RoomVacant += (sender, args) => SetSource((ushort)SourceIds.None);
 
                 _rmc = new DmRmc4kz100C(0x14, this);
                 _rmc.ComPorts[1].SetComPortSpec(ComPort.eComBaudRates.ComspecBaudRate9600,
@@ -133,27 +130,6 @@ namespace HuddleRoom
                         case 1:
                             SetSource(args.Sig.UShortValue);
                             break;
-                    }
-                    break;
-            }
-        }
-
-        private void occSensor_Change(object sender, GenericEventArgs args)
-        {
-            var sensor = sender as CenOdtCPoe;
-
-            switch (args.EventId)
-            {
-                case GlsOccupancySensorBase.RoomOccupiedFeedbackEventId:
-                    if (sensor.OccupancyDetectedFeedback.BoolValue)
-                    {
-                        SetSource((ushort)SourceIds.RoomPC);   // default to Room PC
-                    }
-                    break;
-                case GlsOccupancySensorBase.RoomVacantFeedbackEventId:
-                    if (sensor.VacancyDetectedFeedback.BoolValue)
-                    {
-                        SetSource((ushort)SourceIds.None);
                     }
                     break;
             }
