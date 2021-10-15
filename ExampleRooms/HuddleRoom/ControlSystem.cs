@@ -54,7 +54,7 @@ namespace HuddleRoom
                 }
 
                 _occSensor = new CenOdtCPoe(0x04, this);
-                _occSensor.CenOccupancySensorChange += occSensor_CenOccupancySensorChange;
+                _occSensor.CenOccupancySensorChange += occSensor_Change;
 
                 if (_occSensor.Register() != eDeviceRegistrationUnRegistrationResponse.Success)
                 {
@@ -138,7 +138,7 @@ namespace HuddleRoom
             }
         }
 
-        private void occSensor_CenOccupancySensorChange(object sender, GenericEventArgs args)
+        private void occSensor_Change(object sender, GenericEventArgs args)
         {
             var sensor = sender as CenOdtCPoe;
 
