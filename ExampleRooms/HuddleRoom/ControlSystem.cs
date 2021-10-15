@@ -3,7 +3,9 @@ using Crestron.SimplSharp;
 using Crestron.SimplSharpPro;
 using Crestron.SimplSharpPro.CrestronThread;
 using Crestron.SimplSharpPro.DeviceSupport;
+using Crestron.SimplSharpPro.DM.Endpoints;
 using Crestron.SimplSharpPro.DM.Endpoints.Receivers;
+using Crestron.SimplSharpPro.DM.Endpoints.Transmitters;
 using Crestron.SimplSharpPro.GeneralIO;
 using Crestron.SimplSharpPro.UI;
 
@@ -14,6 +16,7 @@ namespace HuddleRoom
         private BasicTriListWithSmartObject _tp;
         private CenOdtCPoe _occSensor;
         private DmRmc4kz100C _rmc;
+        private DmTx4kz202C _tx;
         private ushort _src;
 
         public ControlSystem()
@@ -62,11 +65,25 @@ namespace HuddleRoom
                 {
                     ErrorLog.Error("Unable to register DM-RMC-4KZ-100-C: {0}", _rmc.RegistrationFailureReason);
                 }
+
+                _tx = new DmTx4kz202C(0x15, this);
+                _tx.HdmiInputs[1].InputStreamChange += laptop_StreamChange;
+                _tx.HdmiInputs[2].InputStreamChange += laptop_StreamChange;
             }
             catch (Exception e)
             {
                 ErrorLog.Error("Error in InitializeSystem: {0}", e.Message);
             }
+        }
+
+        public void system_On()
+        {
+            _rmc.ComPorts[1].Send("PWR ON\r");
+        }
+
+        public void system_Off()
+        {
+            _rmc.ComPorts[1].Send("PWR OFF\r");
         }
 
         public void SetSource (ushort newSource)
@@ -137,14 +154,17 @@ namespace HuddleRoom
             // TODO
         }
 
-        public void system_On()
+        private void laptop_StreamChange(EndpointInputStream stream, EndpointInputStreamEventArgs args)
         {
-            _rmc.ComPorts[1].Send("PWR ON\r");
-        }
+            if (args.EventId == EndpointInputStreamEventIds.SyncDetectedFeedbackEventId)
+            {
+                var inputStream = stream as EndpointHdmiInput;
 
-        public void system_Off()
-        {
-            _rmc.ComPorts[1].Send("PWR OFF\r");
+                if (inputStream.SyncDetectedFeedback.BoolValue)
+                {
+                    SetSource(3);   // make sure Room PC is on display
+                }
+            }
         }
     }
 }
