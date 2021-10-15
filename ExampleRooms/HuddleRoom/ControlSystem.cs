@@ -98,6 +98,8 @@ namespace HuddleRoom
             {
                 system_On();
             }
+
+            _tp.UShortInput[1].UShortValue = _src;
         }
 
         private void tp_OnlineStatusChange(GenericBase dev, OnlineOfflineEventArgs args)
