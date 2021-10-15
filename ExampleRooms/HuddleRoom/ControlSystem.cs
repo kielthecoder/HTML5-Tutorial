@@ -11,6 +11,14 @@ using Crestron.SimplSharpPro.UI;
 
 namespace HuddleRoom
 {
+    public enum SourceIds
+    {
+        None = 0,
+        Laptop = 1,
+        AppleTV = 2,
+        RoomPC = 3
+    }
+
     public class ControlSystem : CrestronControlSystem
     {
         private BasicTriListWithSmartObject _tp;
@@ -90,7 +98,7 @@ namespace HuddleRoom
         {
             _src = newSource;
 
-            if (_src == 0)
+            if (_src == (ushort)SourceIds.None)
             {
                 system_Off();
             }
@@ -139,13 +147,13 @@ namespace HuddleRoom
                 case GlsOccupancySensorBase.RoomOccupiedFeedbackEventId:
                     if (sensor.OccupancyDetectedFeedback.BoolValue)
                     {
-                        SetSource(3);   // default to Room PC
+                        SetSource((ushort)SourceIds.RoomPC);   // default to Room PC
                     }
                     break;
                 case GlsOccupancySensorBase.RoomVacantFeedbackEventId:
                     if (sensor.VacancyDetectedFeedback.BoolValue)
                     {
-                        SetSource(0);
+                        SetSource((ushort)SourceIds.None);
                     }
                     break;
             }
@@ -164,7 +172,7 @@ namespace HuddleRoom
 
                 if (inputStream.SyncDetectedFeedback.BoolValue)
                 {
-                    SetSource(3);   // make sure Room PC is on display
+                    SetSource((ushort)SourceIds.RoomPC);   // make sure Room PC is on display
                 }
             }
         }
