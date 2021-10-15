@@ -69,6 +69,20 @@ namespace HuddleRoom
             }
         }
 
+        public void SetSource (ushort newSource)
+        {
+            _src = newSource;
+
+            if (_src == 0)
+            {
+                system_Off();
+            }
+            else
+            {
+                system_On();
+            }
+        }
+
         private void tp_OnlineStatusChange(GenericBase dev, OnlineOfflineEventArgs args)
         {
             if (args.DeviceOnLine)
@@ -90,15 +104,7 @@ namespace HuddleRoom
                     switch (args.Sig.Number)
                     {
                         case 1:
-                            _src = args.Sig.UShortValue;
-                            if (_src == 0)
-                            {
-                                system_Off();
-                            }
-                            else
-                            {
-                                system_On();
-                            }
+                            SetSource(args.Sig.UShortValue);
                             break;
                     }
                     break;
@@ -114,13 +120,13 @@ namespace HuddleRoom
                 case GlsOccupancySensorBase.RoomOccupiedFeedbackEventId:
                     if (sensor.OccupancyDetectedFeedback.BoolValue)
                     {
-                        // TODO: turn system on
+                        SetSource(3);   // default to Room PC
                     }
                     break;
                 case GlsOccupancySensorBase.RoomVacantFeedbackEventId:
                     if (sensor.VacancyDetectedFeedback.BoolValue)
                     {
-                        // TODO: turn system off
+                        SetSource(0);
                     }
                     break;
             }
