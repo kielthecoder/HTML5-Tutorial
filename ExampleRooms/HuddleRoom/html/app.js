@@ -1,4 +1,4 @@
-const webXpanel = require('../node_modules/@crestron/ch5-webxpanel/dist/cjs/index.js');
+const webXpanel = require('@crestron/ch5-webxpanel/dist/cjs/index.js');
 
 const configuration = {
     host: '192.168.1.13',
@@ -15,7 +15,7 @@ else {
     console.log('Skipping WebXPanel since running on touchpanel');
 }
 
-const CrComLib = require('../node_modules/@crestron/ch5-crcomlib/build_bundles/cjs/cr-com-lib.js');
+const CrComLib = require('@crestron/ch5-crcomlib/build_bundles/cjs/cr-com-lib.js');
 
 window.CrComLib = CrComLib;
 window.bridgeReceiveIntegerFromNative = CrComLib.bridgeReceiveIntegerFromNative;
@@ -27,6 +27,11 @@ const moment = require('moment');
 
 CrComLib.subscribeState('s', '1', (value) => {
     const elem = document.getElementById('room-name');
+    elem.innerHTML = value;
+});
+
+CrComLib.subscribeState('s', '2', (value) => {
+    const elem = document.getElementById('help-number');
     elem.innerHTML = value;
 });
 
@@ -77,26 +82,23 @@ CrComLib.subscribeState('n', '1', (value) => {
         case 2:
             showCard('card-appletv');
             break;
+        case 3:
+            showCard('card-pc');
+            break;
     }
 });
 
-const btnLaptop = document.getElementById('btn-laptop');
-const btnAppleTV = document.getElementById('btn-appletv');
+const btnPC = document.getElementById('btn-pc');
 
-btnLaptop.addEventListener('click', (e) => {
-    showCard('card-laptop');
-    routeSource(1);
-});
+btnPC.addEventListener('click', (e) => {
+    showCard('card-pc');
+    routeSource(3);
+})
 
-btnAppleTV.addEventListener('click', (e) => {
-    showCard('card-appletv');
-    routeSource(2);
-});
-
-const btnSettings = document.getElementById('btn-settings');
+const btnHelp = document.getElementById('btn-help');
 const btnShutdown = document.getElementById('btn-shutdown');
 
-btnSettings.addEventListener('click', (e) => showCard('popup-settings'));
+btnHelp.addEventListener('click', (e) => showCard('popup-help'));
 btnShutdown.addEventListener('click', (e) => showCard('popup-shutdown'));
 
 function previousCard() {
@@ -111,9 +113,6 @@ btnShutdownShutdown.addEventListener('click', (e) => {
     showCard('card-welcome');
     routeSource(0);
 });
-
-const btnSettingsApply = document.getElementById('btn-settings-apply');
-btnSettingsApply.addEventListener('click', (e) => previousCard());
 
 const btnsCancel = Array.from(document.getElementsByClassName('cancel'))
 btnsCancel.forEach((btn) => {

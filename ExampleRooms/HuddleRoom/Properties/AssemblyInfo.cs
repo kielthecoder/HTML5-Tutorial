@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HTML5Demo")]
+[assembly: AssemblyTitle("HuddleRoom")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HTML5Demo")]
+[assembly: AssemblyProduct("HuddleRoom")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("397cf0a9-0cf0-42db-979c-db56c1e1db0a")]
+[assembly: Guid("c852c898-15fc-48db-9fb5-492f1c3e3d8b")]
 
 // Version information for an assembly consists of the following four values:
 //
