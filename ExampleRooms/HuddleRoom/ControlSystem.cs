@@ -3,6 +3,7 @@ using Crestron.SimplSharp;
 using Crestron.SimplSharpPro;
 using Crestron.SimplSharpPro.CrestronThread;
 using Crestron.SimplSharpPro.DeviceSupport;
+using Crestron.SimplSharpPro.DM.Endpoints.Receivers;
 using Crestron.SimplSharpPro.GeneralIO;
 using Crestron.SimplSharpPro.UI;
 
@@ -12,6 +13,7 @@ namespace HuddleRoom
     {
         private BasicTriListWithSmartObject _tp;
         private CenOdtCPoe _occSensor;
+        private DmRmc4kz100C _rmc;
         private ushort _src;
 
         public ControlSystem()
@@ -47,6 +49,19 @@ namespace HuddleRoom
                 {
                     ErrorLog.Error("Unable to register CEN-ODT-C-POE: {0}", _occSensor.RegistrationFailureReason);
                 }
+
+                _rmc = new DmRmc4kz100C(0x14, this);
+                _rmc.ComPorts[1].SetComPortSpec(ComPort.eComBaudRates.ComspecBaudRate9600,
+                    ComPort.eComDataBits.ComspecDataBits8, ComPort.eComParityType.ComspecParityNone,
+                    ComPort.eComStopBits.ComspecStopBits1, ComPort.eComProtocolType.ComspecProtocolRS232,
+                    ComPort.eComHardwareHandshakeType.ComspecHardwareHandshakeNone,
+                    ComPort.eComSoftwareHandshakeType.ComspecSoftwareHandshakeNone, false);
+                _rmc.ComPorts[1].SerialDataReceived += display_DataReceived;
+
+                if (_rmc.Register() != eDeviceRegistrationUnRegistrationResponse.Success)
+                {
+                    ErrorLog.Error("Unable to register DM-RMC-4KZ-100-C: {0}", _rmc.RegistrationFailureReason);
+                }
             }
             catch (Exception e)
             {
@@ -76,6 +91,14 @@ namespace HuddleRoom
                     {
                         case 1:
                             _src = args.Sig.UShortValue;
+                            if (_src == 0)
+                            {
+                                system_Off();
+                            }
+                            else
+                            {
+                                system_On();
+                            }
                             break;
                     }
                     break;
@@ -101,6 +124,21 @@ namespace HuddleRoom
                     }
                     break;
             }
+        }
+
+        private void display_DataReceived(ComPort port, ComPortSerialDataEventArgs args)
+        {
+            // TODO
+        }
+
+        public void system_On()
+        {
+            _rmc.ComPorts[1].Send("PWR ON\r");
+        }
+
+        public void system_Off()
+        {
+            _rmc.ComPorts[1].Send("PWR OFF\r");
         }
     }
 }
